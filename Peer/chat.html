@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <meta name="description" content="">
+    <meta name="author" content="S.Ohsugi">
+    <title>WebSocket Chat</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+      .container {
+        max-width: 768px;
+      }
+      #chat-area {
+        margin-bottom: 15px;
+      }
+      .meta {
+        color: #999999;
+        font-size: 0.9em;
+      }
+      .chat-time {
+        margin-left: 15px;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div>
+      <p class="lead">リアルタイムチャットアプリです。</p>
+    </div>
+    <div class="container">
+      <div id="input-area">
+        <div class="input-prepend">
+            <textarea id="txtMes" class="form-control" rows="3" placeholder="メッセージを入れてください"></textarea>
+            <button type="button" id="btnPush" class="btn btn-primary">送信</button>
+        </div>
+      </div>
+      <ul id="chat-history" class="unstyled row-fluid"></ul>
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="chat.js"></script>
+  </body>
+</html>
