@@ -1,3 +1,12 @@
+//IEに対応していないコンソールログを無効にする。
+(function () {
+    if (typeof window.console === "undefined") {
+        window.console = {}
+    }
+    if (typeof window.console.log !== "function") {
+        window.console.log = function () { }
+    }
+})();
 
 window.addEventListener("load", function () {
 
@@ -18,6 +27,20 @@ window.addEventListener("load", function () {
 
         //window.external.ScriptNotify(JSON.stringify(reqData));
 
+        //自画面に描画
+
+        var item = 
+            $('<li/>').append(
+                $('<div/>').append(
+                    $('<i/>').addClass('glyphicon glyphicon-pencil'),
+                    $('<small/>').addClass('meta chat-time').append(""))
+        );
+ 
+        item.append($('<div/>').addClass('alert alert-success').text(reqData.message))
+            .children('div').children('i').after(reqData.fromUser);
+        $('#chat-history').prepend(item).hide().fadeIn(500);
+
+        //クリア
         $("#txtMes").val("");
 
     });
@@ -60,7 +83,7 @@ window.addEventListener("load", function () {
 
         var item = $('<li/>').append(
         $('<div/>').append(
-            $('<i/>').addClass('icon-user'),
+            $('<i/>').addClass('glyphicon glyphicon-user'),
             $('<small/>').addClass('meta chat-time').append(data.pushTime))
         );
  
