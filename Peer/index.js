@@ -30,15 +30,16 @@ window.addEventListener("load", function () {
         //自画面に描画
 
         var item = 
-            $('<li/>').append(
-                $('<div/>').append(
-                    $('<i/>').addClass('glyphicon glyphicon-pencil'),
-                    $('<small/>').addClass('meta chat-time').append(""))
-        );
+            $("<li/>").addClass("media").append(
+                $("<a/>").addClass("pull-right").attr("href","#").append(
+                    $("<span/>").addClass("media-object " + "glyphicon glyphicon-pencil")),
+                $("<div/>").addClass("media-body mesAreaFrom").append(
+                    $("<div/>").addClass("media-heading " + "mesTitleFrom").append(reqData.fromUser).append(
+                        $("<small/>").addClass("meta chat-time").append("")),
+                    $("<div/>").addClass("alert alert-success "+ "mesFrom").append(reqData.message))
+            );
  
-        item.append($('<div/>').addClass('alert alert-success').text(reqData.message))
-            .children('div').children('i').after(reqData.fromUser);
-        $('#chat-history').prepend(item).hide().fadeIn(500);
+        $('#chat-history').append(item).hide().fadeIn(500);
 
         //クリア
         $("#txtMes").val("");
@@ -81,23 +82,36 @@ window.addEventListener("load", function () {
     socket.on("svPush", function (data) {
         console.log("pullData: " + JSON.stringify(data));
 
-        var item = $('<li/>').append(
-        $('<div/>').append(
-            $('<i/>').addClass('glyphicon glyphicon-user'),
-            $('<small/>').addClass('meta chat-time').append(data.pushTime))
-        );
+        var clsJSON = {
+               "iconLoc" : "pull-left",
+               "icon" : "glyphicon glyphicon-user",
+               "mesArea" : "mesAreaTo",
+               "mesHead" : "mesTitleTo",
+               "mesBody" : "alert alert-info",
+               "mesLoc" : "mesTo",
+            };
+
+        var item = 
+            $("<li/>").addClass("media").append(
+                $("<a/>").addClass(clsJSON.iconLoc).attr("href","#").append(
+                    $("<span/>").addClass("media-object").addClass(clsJSON.icon)),
+                $("<div/>").addClass("media-body").addClass(clsJSON.mesArea).append(
+                    $("<div/>").addClass("media-heading").addClass(clsJSON.mesHead).append(data.fromUser).append(
+                        $("<small/>").addClass("meta chat-time").append(data.pushTime)),
+                    $("<div/>").addClass(clsJSON.mesBody).addClass(clsJSON.mesLoc).append(data.message))
+            );
  
         // pushされたメッセージを解釈し、要素を生成する
         switch (data.type){
             case "system":
-                item.addClass('alert alert-info')
-                .prepend('<button type="button" class="close" data-dismiss="alert">×</button>')
-                .children('div').children('i').after(data.message);
+                //item.addClass('alert alert-info')
+                //.prepend('<button type="button" class="close" data-dismiss="alert">×</button>')
+                //.children('div').children('i').after(data.message);
                 break;
             case "normal":
-                item.addClass('well well-small')
-                .append($('<div/>').text(data.message))
-                .children('div').children('i').after(data.fromUser);
+                //item.addClass('well well-small')
+                //.append($('<div/>').text(data.message))
+                //.children('div').children('i').after(data.fromUser);
                 break;
             default:
                 item.addClass('alert alert-error')
@@ -105,7 +119,7 @@ window.addEventListener("load", function () {
                 .after('不正なメッセージを受信しました');
                 break;
        }
-       $('#chat-history').prepend(item).hide().fadeIn(500);
+       $('#chat-history').append(item).hide().fadeIn(500);
 
     });
 
